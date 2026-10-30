@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#050509">
+<meta name="description" content="Vivek Kumar — E-Commerce Account Manager, Web Developer and State-Level MMA Gold Medalist.">
+<title>VIVEK KUMAR — Beyond the Ordinary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<style>
+:root{--bg:#050509;--ink:#f6f5ff;--muted:rgba(246,245,255,.65);--line:rgba(255,255,255,.15);--glass:rgba(255,255,255,.075);--accent:#b6a2ff}
+*{margin:0;padding:0;box-sizing:border-box}
+html{background:var(--bg);scroll-behavior:auto}
+body{font-family:"DM Sans",sans-serif;color:var(--ink);background:var(--bg);overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+::selection{background:#d8ccff;color:#111}
+.loader{position:fixed;inset:0;background:#050509;z-index:9999;display:grid;place-items:center;transition:opacity .8s,visibility .8s}
+.loader.hide{opacity:0;visibility:hidden}
+.loader span{font:11px "Space Grotesk";letter-spacing:7px;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.25}}
+.progress-track{position:fixed;top:0;left:0;width:100%;height:2px;background:#ffffff16;z-index:1000}
+.progress-bar{height:100%;width:0;background:#fff}
+.story{height:400vh;background:#030307;position:relative}
+.scene{height:100vh;height:100svh;width:100%;position:relative;overflow:hidden;background:#030307;isolation:isolate}
+#universe,#stars{position:absolute;inset:0;width:100%;height:100%}
+#universe{z-index:1}#stars{z-index:2;pointer-events:none}
+.vignette{position:absolute;inset:0;z-index:3;pointer-events:none;background:radial-gradient(ellipse at center,transparent 12%,#0008 65%,#000 115%)}
+.top-nav,.world-nav{position:absolute;top:0;left:0;right:0;z-index:15;padding:30px 6%;display:flex;justify-content:space-between;align-items:center}
+.logo{font:600 15px "Space Grotesk";letter-spacing:5px}
+.nav-caption,.eyebrow{font-size:9px;letter-spacing:3px;color:#ffffff80}
+.intro{position:absolute;inset:0;z-index:5;display:flex;justify-content:center;align-items:center;pointer-events:none}
+.singularity-dot{position:absolute;width:5px;height:5px;border-radius:50%;background:#fff;box-shadow:0 0 24px 7px #fff8}
+.intro-title{position:absolute;top:27%;font:300 clamp(30px,5vw,66px) "Space Grotesk";letter-spacing:12px;opacity:0;text-align:center}
+.scroll-prompt{position:absolute;top:calc(50% + 75px);display:flex;align-items:center;flex-direction:column;gap:14px;animation:bob 2s infinite}
+.scroll-prompt span{font-size:9px;letter-spacing:5px;color:#ffffffa0}
+.scroll-line{height:34px;width:1px;background:linear-gradient(transparent,#fff)}
+@keyframes bob{50%{transform:translateY(7px);opacity:.55}}
+.horizon-copy{position:absolute;z-index:8;left:50%;top:50%;transform:translate(-50%,-50%);text-align:center;width:90%;opacity:0;pointer-events:none}
+.horizon-copy h2{font:400 clamp(38px,8vw,100px) "Space Grotesk";letter-spacing:-4px}
+.horizon-copy p{margin-top:16px;font-size:9px;letter-spacing:5px;color:#ffffff80}
+.flash{position:absolute;inset:0;background:white;z-index:30;opacity:0;pointer-events:none}
+.new-world{position:absolute;inset:0;z-index:10;opacity:0;visibility:hidden;overflow:hidden;background:radial-gradient(ellipse at 12% 20%,#7869dfd9,transparent 40%),radial-gradient(ellipse at 88% 25%,#43c1dca8,transparent 38%),radial-gradient(ellipse at 55% 100%,#ef91c18c,transparent 46%),linear-gradient(135deg,#17172e,#1b3154 55%,#282044)}
+.new-world:after,.world-page:after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.12;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.3'/%3E%3C/svg%3E")}
+.world-nav{z-index:4}.world-nav a{font-size:10px;letter-spacing:2px;color:#fffB}
+.world-content{height:100%;position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 8% 40px}
+.world-content .eyebrow{margin-bottom:22px}
+.world-content h1{font:400 clamp(55px,10vw,132px)/.92 "Space Grotesk";letter-spacing:-7px}
+.world-content h1 span{color:#ffffff80}
+.world-content p{max-width:530px;margin-top:26px;color:#ffffffb8;font-size:14px;line-height:1.9}
+.pill-link{display:inline-flex;margin-top:32px;padding:14px 25px;border:1px solid #ffffff80;border-radius:50px;font-size:10px;letter-spacing:2px;transition:.3s}
+.pill-link:hover{background:white;color:#17172e}
+.world-page{position:relative;overflow:hidden;padding:125px 8% 55px;background:radial-gradient(ellipse at 5% 15%,#7773d6 0%,transparent 38%),radial-gradient(ellipse at 90% 35%,#397eaf 0%,transparent 35%),radial-gradient(ellipse at 50% 100%,#bd719e 0%,transparent 45%),linear-gradient(140deg,#171932,#1a3152,#26203d)}
+.world-page>*{position:relative;z-index:1}
+.section-label{font-size:9px;letter-spacing:4px;color:#ffffff99;margin-bottom:24px}
+.world-heading{font:400 clamp(42px,7vw,86px)/1.04 "Space Grotesk";letter-spacing:-4px;max-width:900px}
+.world-heading span{color:#ffffff80}
+.world-intro{max-width:590px;margin-top:22px;font-size:14px;line-height:1.9;color:#ffffffb8}
+.about-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;margin-top:68px}
+.glass-panel,.glass-card,.skill-card,.project-card{border:1px solid var(--line);background:var(--glass);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:24px}
+.glass-panel{padding:34px}
+.panel-kicker,.card-number{font-size:9px;letter-spacing:3px;color:#ffffff80}
+.glass-panel h3{font:400 27px "Space Grotesk";margin:23px 0 13px}
+.glass-panel p{font-size:13px;line-height:1.9;color:#ffffffb5}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.stat{padding:24px;border:1px solid #ffffff22;border-radius:19px;background:#ffffff0a}
+.stat strong{display:block;font:500 clamp(27px,4vw,42px) "Space Grotesk"}
+.stat span{display:block;margin-top:8px;font-size:10px;letter-spacing:1px;color:#ffffff9c;line-height:1.5}
+.section-block{margin-top:105px}
+.section-title{font:400 clamp(34px,5vw,58px) "Space Grotesk";letter-spacing:-2px}
+.section-sub{font-size:13px;color:#ffffff9c;margin-top:12px;line-height:1.8}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:17px;margin-top:35px}
+.glass-card{min-height:245px;padding:27px;transition:transform .4s,background .4s}
+.glass-card:hover,.project-card:hover{transform:translateY(-8px);background:#ffffff15}
+.card-icon{width:45px;height:45px;border-radius:15px;background:#ffffff18;display:grid;place-items:center;font-size:20px;margin:30px 0 20px}
+.glass-card h3,.project-card h3{font:400 22px "Space Grotesk"}
+.glass-card p,.project-card p{margin-top:10px;color:#ffffffa8;font-size:12px;line-height:1.8}
+.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:32px}
+.skill-card{padding:19px 18px;font-size:12px;color:#ffffffd9}
+.skill-card small{display:block;color:#ffffff70;font-size:9px;letter-spacing:2px;margin-bottom:9px}
+.projects{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:32px}
+.project-card{padding:25px;transition:.4s}
+.project-card a{display:inline-block;margin-top:16px;font-size:10px;letter-spacing:1px;color:#d8ccff}
+.project-card a:hover{color:white}
+.timeline{margin-top:32px;border-left:1px solid #ffffff45;padding-left:25px;display:grid;gap:30px}
+.experience-item{position:relative}
+.experience-item:before{content:"";position:absolute;left:-31px;top:5px;width:10px;height:10px;border-radius:50%;background:#d7caff;box-shadow:0 0 16px #c4b3ff}
+.experience-item h3{font:400 21px "Space Grotesk"}
+.experience-item .meta{font-size:10px;letter-spacing:1px;color:#ffffff80;margin-top:7px}
+.experience-item p{font-size:12px;line-height:1.8;color:#ffffffb0;margin-top:10px;max-width:780px}
+.achievement{display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;padding:32px;border:1px solid #ffffff35;border-radius:24px;background:linear-gradient(120deg,#ffffff17,#ffffff05);margin-top:32px}
+.achievement h3{font:400 clamp(24px,4vw,38px) "Space Grotesk"}
+.achievement p{margin-top:10px;font-size:12px;line-height:1.8;color:#ffffffad}
+.medal{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 35% 30%,#fff4c2,#d5a64c 45%,#8c5b19);color:#432b0d;font-size:37px;box-shadow:0 0 45px #e7b95c45}
+.education-list{display:grid;grid-template-columns:repeat(2,1fr);gap:13px;margin-top:30px}
+.edu{padding:22px;border:1px solid #ffffff25;border-radius:18px;background:#ffffff09}
+.edu strong{font:400 17px "Space Grotesk"}
+.edu span{display:block;margin-top:8px;color:#ffffff9b;font-size:11px;line-height:1.7}
+.quote-section{padding:150px 4%;text-align:center}
+.quote-section h2{font:300 clamp(34px,6vw,72px)/1.2 "Space Grotesk";letter-spacing:-3px;max-width:1050px;margin:auto}
+.quote-section p{margin-top:25px;font-size:9px;letter-spacing:5px;color:#ffffff80}
+.contact-box{margin-top:35px;padding:38px;border:1px solid #ffffff30;border-radius:25px;background:#ffffff0b;display:flex;justify-content:space-between;align-items:center;gap:25px}
+.contact-box h3{font:400 clamp(25px,4vw,42px) "Space Grotesk"}
+.contact-box p{font-size:12px;color:#ffffffa0;margin-top:10px}
+.contact-links{display:flex;flex-wrap:wrap;gap:10px}
+.contact-links a{border:1px solid #ffffff55;border-radius:30px;padding:12px 17px;font-size:10px;letter-spacing:1px}
+.contact-links a:hover{background:white;color:#17172e}
+footer{margin-top:90px;padding:30px 0 5px;border-top:1px solid #ffffff25;display:flex;justify-content:space-between;gap:18px;color:#ffffff75;font-size:9px;letter-spacing:2px}
+@media(max-width:900px){.cards{grid-template-columns:repeat(2,1fr)}.skill-grid{grid-template-columns:repeat(2,1fr)}.about-grid{grid-template-columns:1fr}.stats{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:600px){.top-nav,.world-nav{padding:23px 6%}.logo{font-size:12px;letter-spacing:3px}.nav-caption{font-size:7px;letter-spacing:1px}.intro-title{letter-spacing:5px}.world-content h1{letter-spacing:-3px}.world-content p{font-size:12px}.world-page{padding:90px 6% 40px}.cards,.projects,.education-list{grid-template-columns:1fr}.skill-grid{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.section-block{margin-top:75px}.glass-panel{padding:25px}.achievement{grid-template-columns:1fr}.medal{width:70px;height:70px;font-size:29px}.contact-box{align-items:flex-start;flex-direction:column}.quote-section{padding:110px 3%}footer{flex-direction:column;text-align:center}}
+@media(prefers-reduced-motion:reduce){*,*:before,*:after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<div class="loader"><span>ENTERING THE VOID</span></div>
+<div class="progress-track"><div class="progress-bar"></div></div>
+
+<section class="story">
+  <div class="scene">
+    <canvas id="universe"></canvas><canvas id="stars"></canvas><div class="vignette"></div>
+    <nav class="top-nav"><div class="logo">VIVEK KUMAR<span style="color:#9d8aff">.</span></div><div class="nav-caption">DREAM · BUILD · EXECUTE</div></nav>
+    <div class="intro">
+      <div class="intro-title">BEYOND THE ORDINARY</div><div class="singularity-dot"></div>
+      <div class="scroll-prompt"><span>SCROLL TO EXPLORE</span><div class="scroll-line"></div></div>
+    </div>
+    <div class="horizon-copy"><h2>THE NEXT LEVEL</h2><p>TURNING IDEAS INTO REALITY</p></div>
+    <div class="flash"></div>
+    <div class="new-world">
+      <nav class="world-nav"><div class="logo">VK<span style="color:#d4c6ff">.</span></div><a href="#about">DISCOVER MY JOURNEY ↓</a></nav>
+      <div class="world-content">
+        <div class="eyebrow">E-COMMERCE · TECHNOLOGY · DISCIPLINE</div>
+        <h1>Vivek Kumar<br><span>Build beyond limits.</span></h1>
+        <p>I turn digital platforms into better experiences — combining e-commerce strategy, web development, marketplace operations and a never-quit mindset.</p>
+        <a class="pill-link" href="#about">EXPLORE MY WORLD ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="world-page" id="about">
+  <div class="section-label">01 — THE PERSON BEHIND THE WORK</div>
+  <h2 class="world-heading">Curious mind.<br><span>Relentless execution.</span></h2>
+  <p class="world-intro">I’m Vivek Kumar, an E-Commerce Account Manager and Web Developer based in New Delhi, India. I work across marketplace growth, online store management, website development and SEO — bringing creative thinking and practical execution together.</p>
+
+  <div class="about-grid">
+    <div class="glass-panel">
+      <div class="panel-kicker">MY APPROACH</div>
+      <h3>Make digital work smarter.</h3>
+      <p>From product catalogues and listing optimization to Shopify websites, A+ Content, Brand Stores and performance reporting, I enjoy solving the details that make an online business work better. I believe strong results come from consistency, clear thinking and learning every day.</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><strong>10+</strong><span>Marketplace accounts handled* </span></div>
+      <div class="stat"><strong>5+</strong><span>Marketplace platforms</span></div>
+      <div class="stat"><strong>3+</strong><span>Website platforms</span></div>
+      <div class="stat"><strong>1</strong><span>State-level MMA gold</span></div>
+    </div>
+  </div>
+
+  <section class="section-block">
+    <div class="section-label">02 — WHAT I DO</div><h2 class="section-title">A mix of strategy & technology.</h2>
+    <p class="section-sub">The skills I bring to digital commerce and web experiences.</p>
+    <div class="cards">
+      <article class="glass-card"><div class="card-number">01 / MARKETPLACES</div><div class="card-icon">◈</div><h3>E-Commerce Management</h3><p>Amazon Seller Central, Flipkart, Meesho and Myntra operations, catalogue management, account health, listing optimization and marketplace support.</p></article>
+      <article class="glass-card"><div class="card-number">02 / CONTENT</div><div class="card-icon">✧</div><h3>Brand & Listing Content</h3><p>Product titles, bullets, descriptions, backend keywords, A+ Content, Brand Stores and Brand Stories designed to improve product presentation.</p></article>
+      <article class="glass-card"><div class="card-number">03 / DEVELOPMENT</div><div class="card-icon">⌘</div><h3>Web Development</h3><p>Shopify, WordPress, Wix, HTML, CSS and JavaScript for responsive websites, store updates and practical web projects.</p></article>
+      <article class="glass-card"><div class="card-number">04 / GROWTH</div><div class="card-icon">↗</div><h3>SEO & Visibility</h3><p>Keyword research, on-page and off-page SEO, link building, Google Search Console and technical SEO fundamentals.</p></article>
+      <article class="glass-card"><div class="card-number">05 / ANALYTICS</div><div class="card-icon">▥</div><h3>Reports & Insights</h3><p>SKU-wise sales reports, advertising reports, basic campaign analysis, Excel and Power BI fundamentals.</p></article>
+      <article class="glass-card"><div class="card-number">06 / CREATIVE</div><div class="card-icon">✳</div><h3>Visual Communication</h3><p>Canva creatives, promotional graphics and social media content that help products and brands communicate clearly.</p></article>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-label">03 — MY TOOLKIT</div><h2 class="section-title">Tools I work with.</h2>
+    <div class="skill-grid">
+      <div class="skill-card"><small>MARKETPLACES</small>Amazon Seller Central</div><div class="skill-card"><small>MARKETPLACES</small>Flipkart · Meesho</div><div class="skill-card"><small>MARKETPLACES</small>Myntra · Vaaree</div><div class="skill-card"><small>ECOMMERCE</small>Shopify</div>
+      <div class="skill-card"><small>CMS</small>WordPress · Wix</div><div class="skill-card"><small>DEVELOPMENT</small>HTML5 · CSS3</div><div class="skill-card"><small>DEVELOPMENT</small>JavaScript · Java</div><div class="skill-card"><small>DATABASE</small>MySQL</div>
+      <div class="skill-card"><small>SEO</small>Ahrefs · Ubersuggest</div><div class="skill-card"><small>SEO</small>Google Search Console</div><div class="skill-card"><small>DESIGN</small>Canva</div><div class="skill-card"><small>ANALYTICS</small>Excel · Power BI</div>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-label">04 — EXPERIENCE</div><h2 class="section-title">Where I’ve made an impact.</h2>
+    <div class="timeline">
+      <div class="experience-item"><h3>Account Manager – E-Commerce</h3><div class="meta">MIASHI PVT. LTD. · 25 JUNE 2026 — PRESENT</div><p>Managing multiple marketplace accounts across Amazon, Flipkart and Meesho. Working on account operations, catalogue and listing optimization, A+ Content, Brand Stores, Brand Stories, SKU and advertising reports, pricing, visibility and seller-support escalations.</p></div>
+      <div class="experience-item"><h3>E-Commerce Executive & Web Developer</h3><div class="meta">DECORS MANTRA · 01 JUNE 2025 — 20 JUNE 2026</div><p>Developed and maintained Shopify, WordPress and Wix websites; managed product catalogues on Amazon, Myntra, Flipkart and Vaaree; optimized listing content; supported SEO and created promotional creatives.</p></div>
+      <div class="experience-item"><h3>Networking & Technical Training Intern</h3><div class="meta">DELHI INSTITUTE OF HIGHER EDUCATION</div><p>Learned networking fundamentals including TCP/IP, DNS, DHCP, routing, switching and basic network security concepts.</p></div>
+      <div class="experience-item"><h3>Online Research Intern</h3><div class="meta">ORNATE TECHNOSERVICES PVT. LTD.</div><p>Researched technologies and industry trends, organized findings and prepared reports to support team research activities.</p></div>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-label">05 — SELECTED WORK</div><h2 class="section-title">Projects in the real world.</h2>
+    <div class="projects">
+      <article class="project-card"><div class="card-number">01 / E-COMMERCE</div><h3>Decors Mantra</h3><p>Shopify e-commerce development and marketplace management.</p><a href="https://decorsmantra.com/" target="_blank" rel="noopener">VISIT WEBSITE ↗</a></article>
+      <article class="project-card"><div class="card-number">02 / WEBSITE & SEO</div><h3>Mooving SG</h3><p>Website maintenance and SEO optimization.</p><a href="https://moovingsg.com/" target="_blank" rel="noopener">VISIT WEBSITE ↗</a></article>
+      <article class="project-card"><div class="card-number">03 / TECHNICAL SEO</div><h3>Vertex Works</h3><p>Technical SEO and lead generation setup.</p><a href="https://vertexworksg.com/" target="_blank" rel="noopener">VISIT WEBSITE ↗</a></article>
+      <article class="project-card"><div class="card-number">04 / FRONT-END</div><h3>Personal Web Projects</h3><p>Portfolio website, calculator application, background color changer and image downloader built with HTML, CSS and JavaScript.</p></article>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-label">06 — EDUCATION & LEARNING</div><h2 class="section-title">Always learning. Always building.</h2>
+    <div class="education-list">
+      <div class="edu"><strong>Master of Computer Applications (MCA)</strong><span>Pursuing · JB Knowledge Park</span></div>
+      <div class="edu"><strong>Bachelor of Computer Applications (BCA)</strong><span>JIMS Noida Extension · CCSU Affiliated</span></div>
+      <div class="edu"><strong>Class 12 — CBSE</strong><span>Govt. Sarvodaya Bal Vidyalaya No. 2, New Delhi</span></div>
+      <div class="edu"><strong>Class 10 — CBSE</strong><span>Govt. Sarvodaya Bal Vidyalaya No. 2, New Delhi</span></div>
+    </div>
+    <div class="glass-panel" style="margin-top:15px">
+      <div class="panel-kicker">CERTIFICATIONS</div>
+      <p style="margin-top:15px">Python Essentials 1 & 2 — IBM · Python Certification — MCN Solution · MS Access & MS Excel — IBM · Power of Data Analysis — Training Basket · OOPs in Java — IBM · MySQL for Beginners — Great Learning</p>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <div class="section-label">07 — BEYOND THE SCREEN</div><h2 class="section-title">Discipline is my edge.</h2>
+    <div class="achievement">
+      <div><div class="panel-kicker">SPORTS ACHIEVEMENT</div><h3>State-Level MMA Gold Medalist</h3><p>Martial arts has taught me discipline, resilience, focus and the value of consistent effort. Earning a state-level gold medal is a milestone I’m proud of — and a reminder to keep pushing beyond my limits. Martial arts belt: details to be added.</p></div>
+      <div class="medal" aria-label="Gold medal">★</div>
+    </div>
+  </section>
+
+  <section class="quote-section">
+    <h2>“Growth begins when you decide that your current limits are not your final destination.”</h2>
+    <p>STAY CURIOUS · STAY DISCIPLINED · KEEP BUILDING</p>
+  </section>
+
+  <section class="section-block" id="contact">
+    <div class="section-label">08 — LET’S CONNECT</div>
+    <div class="contact-box">
+      <div><h3>Have a project in mind?</h3><p>Let’s connect and build something meaningful.</p></div>
+      <div class="contact-links"><a href="mailto:jhavivek9911@gmail.com">EMAIL ME ↗</a><a href="https://www.linkedin.com/in/vivek-jha-65135925b/" target="_blank" rel="noopener">LINKEDIN ↗</a><a href="https://github.com/vivek-kumar258" target="_blank" rel="noopener">GITHUB ↗</a><a href="tel:+919911508773">CALL ↗</a></div>
+    </div>
+  </section>
+
+  <footer><span>VIVEK KUMAR © 2026</span><span>NEW DELHI, INDIA</span><span>BUILT WITH CURIOSITY & CODE</span></footer>
+</main>
+
+<script>
+// Smooth scrolling
+gsap.registerPlugin(ScrollTrigger);
+const lenis = new Lenis({duration:1.2,smoothWheel:true,wheelMultiplier:.85,touchMultiplier:1.4});
+lenis.on("scroll",ScrollTrigger.update);
+gsap.ticker.add(t=>lenis.raf(t*1000));
+gsap.ticker.lagSmoothing(0);
+
+// Three.js black-hole shader
+const canvas=document.getElementById("universe");
+const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+const scene=new THREE.Scene();
+const camera=new THREE.OrthographicCamera(-1,1,1,-1,0,1);
+const uniforms={uTime:{value:0},uProgress:{value:0},uResolution:{value:new THREE.Vector2(innerWidth,innerHeight)}};
+const vertexShader=`varying vec2 vUv;void main(){vUv=uv;gl_Position=vec4(position,1.0);}`;
+const fragmentShader=`
+precision highp float;varying vec2 vUv;uniform float uTime;uniform float uProgress;uniform vec2 uResolution;
+void main(){
+ vec2 uv=(vUv-.5)*vec2(uResolution.x/uResolution.y,1.);float d=length(uv);float a=atan(uv.y,uv.x);
+ float p=clamp(uProgress,0.,1.);float r=mix(.018,1.18,pow(p,1.2));
+ float lens=.045/max(d,.012);vec2 warped=uv*(1.+lens*p*2.2);float wd=length(warped);
+ vec3 col=vec3(.003,.004,.012);
+ float disk=exp(-pow((d-r*1.28)*13.,2.))*(.65+.35*sin(a*10.+uTime*1.5));
+ vec3 diskCol=mix(vec3(.24,.34,1.),vec3(1.,.32,.09),smoothstep(-.65,.65,uv.y));
+ col+=diskCol*disk*(.12+p*2.4);
+ float ring=exp(-pow((wd-r*.72)*95.,2.));col+=vec3(1.,.82,.58)*ring*(.1+p*1.6);
+ float horizon=smoothstep(r*.68,r*.68+.014,wd);col*=horizon;
+ float glow=exp(-abs(d-r)*5.);col+=vec3(.16,.2,.7)*glow*p*.35;
+ col*=1.-smoothstep(.3,1.35,length(uv));
+ col=mix(col,vec3(1.),smoothstep(.70,.79,p));
+ gl_FragColor=vec4(col,1.);
+}`;
+const material=new THREE.ShaderMaterial({uniforms,vertexShader,fragmentShader});
+scene.add(new THREE.Mesh(new THREE.PlaneGeometry(2,2),material));
+function resize(){renderer.setSize(innerWidth,innerHeight);uniforms.uResolution.value.set(innerWidth,innerHeight);}
+resize();addEventListener("resize",resize);
+
+// Canvas starfield pulled into the singularity
+const starCanvas=document.getElementById("stars"),ctx=starCanvas.getContext("2d");
+let stars=[],progress=0;
+function resetStars(){
+ const dpr=Math.min(devicePixelRatio,2);starCanvas.width=innerWidth*dpr;starCanvas.height=innerHeight*dpr;
+ starCanvas.style.width=innerWidth+"px";starCanvas.style.height=innerHeight+"px";ctx.setTransform(dpr,0,0,dpr,0,0);
+ stars=Array.from({length:650},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()*1.4+.2,o:Math.random()*.75+.2,v:Math.random()*.5+.3}));
+}
+resetStars();addEventListener("resize",resetStars);
+function drawStars(){
+ ctx.clearRect(0,0,innerWidth,innerHeight);const cx=innerWidth/2,cy=innerHeight/2,p=Math.pow(progress,2.05);
+ for(const st of stars){const dx=cx-st.x,dy=cy-st.y,dist=Math.hypot(dx,dy)||1,nx=dx/dist,ny=dy/dist;
+  const pull=p*.16,x=st.x-dx*pull,y=st.y-dy*pull,stretch=p*st.v*32;
+  ctx.beginPath();ctx.strokeStyle=`rgba(255,255,255,${st.o*(1-p*.58)})`;ctx.lineWidth=st.s;
+  ctx.moveTo(x,y);ctx.lineTo(x-nx*stretch,y-ny*stretch);ctx.stroke();
+  if(p>.91&&dist<35){st.x=Math.random()*innerWidth;st.y=Math.random()*innerHeight;}
+ }
+ requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// Scroll-driven black-hole sequence
+const story=document.querySelector(".story"),sceneEl=document.querySelector(".scene");
+const dot=document.querySelector(".singularity-dot"),prompt=document.querySelector(".scroll-prompt"),introTitle=document.querySelector(".intro-title");
+const horizon=document.querySelector(".horizon-copy"),flash=document.querySelector(".flash"),newWorld=document.querySelector(".new-world");
+const bar=document.querySelector(".progress-bar");
+const tl=gsap.timeline({scrollTrigger:{trigger:story,start:"top top",end:"bottom bottom",scrub:1,pin:sceneEl,anticipatePin:1,onUpdate:self=>{
+ progress=self.progress;uniforms.uProgress.value=progress;bar.style.width=(progress*100)+"%";
+ sceneEl.style.filter=progress>.1?`blur(${Math.min(progress*1.2,1.2)}px)`:"none";
+}}});
+tl.to(dot,{scale:1.5,duration:.1},0)
+ .to(prompt,{opacity:0,y:25,duration:.1},.025)
+ .to(introTitle,{opacity:1,y:-15,duration:.12},.05)
+ .to(dot,{scale:0,duration:.15},.13)
+ .to(introTitle,{opacity:0,scale:1.25,duration:.18},.2)
+ .to(horizon,{opacity:1,duration:.12},.55)
+ .to(horizon,{opacity:0,scale:1.45,duration:.1},.68)
+ .to(flash,{opacity:1,duration:.035},.70)
+ .to(flash,{opacity:0,duration:.12},.735)
+ .to(newWorld,{autoAlpha:1,duration:.2,ease:"power2.out"},.73)
+ .from(".world-content > *",{y:35,opacity:0,stagger:.06,duration:.28,ease:"power3.out"},.78);
+
+// Portfolio section reveals
+gsap.utils.toArray(".glass-card,.project-card,.skill-card,.experience-item,.edu").forEach((el)=>{
+ gsap.from(el,{scrollTrigger:{trigger:el,start:"top 88%",toggleActions:"play none none reverse"},y:35,opacity:0,duration:.7,ease:"power3.out"});
+});
+gsap.from(".quote-section h2",{scrollTrigger:{trigger:".quote-section",start:"top 82%"},y:45,opacity:0,duration:1});
+window.addEventListener("load",()=>{document.querySelector(".loader").classList.add("hide");setTimeout(()=>ScrollTrigger.refresh(),350);});
+if(document.readyState==="complete"){document.querySelector(".loader").classList.add("hide");ScrollTrigger.refresh();}
+</script>
+</body>
+</html>
